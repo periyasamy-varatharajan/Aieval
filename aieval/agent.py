@@ -1,12 +1,15 @@
 from google import genai
+import logging
 
+log = logging.getLogger(__name__)
 class Agent:
     def __init__(self):
         self.agent = genai.Client()
         self.model="gemini-2.5-flash-lite"
     
     def prompt(self,content):
-        response = self.agent.models.generate_content(model=self.model,contents=content)
+        response = self.agent.models.generate_content(model=self.model,contents=content,config={"response_mime_type": "application/json"})
+        log.info(response)
         return response.text
 
 if __name__ == "__main__":

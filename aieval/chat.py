@@ -1,13 +1,14 @@
-from .agent import Agent
 import logging
 log = logging.getLogger(__name__)
 class Chat:
-    def __init__(self):
-        self.agent = Agent()
+    def __init__(self,agent):
+        self.agent = agent
         self.contents =[]
     def sendcontents(self):
         log.info(self.contents)
-        return self.agent.prompt(self.contents)
+        response = self.agent.prompt(self.contents)
+        self.addmessage("model",response)
+        return response
     def addmessage(self,role,content):
         self.contents.append({"role": role, "parts": [{"text": content}]})
     def chitchat(self):
